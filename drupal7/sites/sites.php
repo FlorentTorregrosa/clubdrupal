@@ -96,3 +96,4 @@ $sites['assos.centrale-marseille.fr.ksitest'] = 'assos.centrale-marseille.fr.ksi
 $sites['assos.centrale-marseille.fr.forumfoceentest'] = 'assos.centrale-marseille.fr.forumfoceentest';
 $sites['assos.centrale-marseille.fr.pxc'] = 'assos.centrale-marseille.fr.pxc';
 $sites['assos.centrale-marseille.fr.echangesphotest'] = 'assos.centrale-marseille.fr.echangesphotest';
+$sites['assos.centrale-marseille.fr.accueiltest'] = 'assos.centrale-marseille.fr.accueiltest';
