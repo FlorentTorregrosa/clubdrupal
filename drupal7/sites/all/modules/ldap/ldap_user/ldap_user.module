@@ -965,7 +965,6 @@ function ldap_user_user_insert(&$user_edit, $account, $category) {
  */
 
 function ldap_user_user_update(&$user_edit, $account, $category) {
-  //debug("ldap_user_user_update, category=$category"); debug($user_edit); debug($account); // ldap_user_user_insert, category='. $category . 'account->status = ' . $account->status);
   if (ldap_user_ldap_exclude($account, $user_edit)) {
     return;
   }
@@ -1011,7 +1010,6 @@ function ldap_user_user_update(&$user_edit, $account, $category) {
  */
 
 function ldap_user_user_presave(&$user_edit, $account, $category) {
- //debug("ldap_user_user_presave, category=$category"); debug($user_edit); debug($account); // ldap_user_user_insert, category='. $category . 'account->status = ' . $account->status);
 
   if (ldap_user_ldap_exclude($account, $user_edit)) {
     return;
@@ -1058,34 +1056,6 @@ function ldap_user_user_delete($account) {
     $boolean_result = $ldap_user_conf->deleteProvisionedLdapEntries($account);
     // no need to watchdog here, because fail in deleteProvisionedLdapEntries provides watchdog entry
   }
-}
-
-
-
-/**
- * @return default value for field user->ldap_user_provisioned_sid
- */
-function ldap_user_provisioned_sid_default($entity_type, $entity, $field, $instance, $langcode) {
-  return NULL;
-}
-
-/**
- * @return default value for field user->ldap_user_provisioned_sid
- */
-function ldap_user_puid_default($entity_type, $entity, $field, $instance, $langcode) {
-  return NULL;
-}
-/**
- * @return default value for field user->ldap_user_puid
- */
-function ldap_user_puid_property_default($entity_type, $entity, $field, $instance, $langcode) {
-  return NULL;
-}
-/**
- * @return default value for field user->ldap_user_dn
- */
-function ldap_user_dn_default($entity_type, $entity, $field, $instance, $langcode) {
-  return NULL;
 }
 
 /**
