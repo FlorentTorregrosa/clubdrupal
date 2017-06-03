@@ -39,7 +39,6 @@ $aliases['d7'] = array(
         'assos.centrale-marseille.fr/ftorregrosa',
         'assos.centrale-marseille.fr/icm',
         'assos.centrale-marseille.fr/isf',
-        'assos.centrale-marseille.fr/jenselmetest',
         'assos.centrale-marseille.fr/jpennec',
         'assos.centrale-marseille.fr/mdv',
         'assos.centrale-marseille.fr/tvp',
@@ -69,7 +68,6 @@ $aliases['forumentreprises'] = array('uri' => 'assos.centrale-marseille.fr/forum
 $aliases['ftorregrosa'] = array('uri' => 'assos.centrale-marseille.fr/ftorregrosa', 'root' => '/home/assos/drupal7/', );
 $aliases['icm'] = array('uri' => 'assos.centrale-marseille.fr/icm', 'root' => '/home/assos/drupal7/', );
 $aliases['isf'] = array('uri' => 'assos.centrale-marseille.fr/isf', 'root' => '/home/assos/drupal7/', );
-$aliases['jenselmetest'] = array('uri' => 'assos.centrale-marseille.fr/jenselmetest', 'root' => '/home/assos/drupal7/', );
 $aliases['jpennec'] = array('uri' => 'assos.centrale-marseille.fr/jpennec', 'root' => '/home/assos/drupal7/', );
 $aliases['mdv'] = array('uri' => 'assos.centrale-marseille.fr/mdv', 'root' => '/home/assos/drupal7/', );
 $aliases['tvp'] = array('uri' => 'assos.centrale-marseille.fr/tvp', 'root' => '/home/assos/drupal7/', );
