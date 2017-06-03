@@ -22,3 +22,7 @@ d7-sync-config.sh
 # Sauron
 /sauron/*
 !/sauron/config
+
+# Ignore composer.
+bin/composer
+
