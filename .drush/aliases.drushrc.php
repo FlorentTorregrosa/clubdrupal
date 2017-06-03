@@ -18,7 +18,6 @@ $aliases['d7'] = array(
 'assos.centrale-marseille.fr/aeecm',
 'assos.centrale-marseille.fr/beret',
         'default',
-        'assos.centrale-marseille.fr/accueil',
         'assos.centrale-marseille.fr/agora',
         'assos.centrale-marseille.fr/annales',
         'assos.centrale-marseille.fr/aoudad',
@@ -50,7 +49,6 @@ $aliases['d7'] = array(
     'root' => '/home/assos/drupal7/',
 );
 $aliases['default'] = array('uri' => 'assos.centrale-marseille.fr', 'root' => '/home/assos/drupal7', );
-$aliases['accueil'] = array('uri' => 'assos.centrale-marseille.fr/accueil', 'root' => '/home/assos/drupal7/', );
 $aliases['agora'] = array('uri' => 'assos.centrale-marseille.fr/agora', 'root' => '/home/assos/drupal7/', );
 $aliases['annales'] = array('uri' => 'assos.centrale-marseille.fr/annales', 'root' => '/home/assos/drupal7/', );
 $aliases['aoudad'] = array('uri' => 'assos.centrale-marseille.fr/aoudad', 'root' => '/home/assos/drupal7/', );
