@@ -9,7 +9,8 @@ Before synching the site, the destination site's database is backuped. If the
 destination site does not exist, it is created. If prod is set, the site is not in
 maintenance mode.
 
-usage: d7-sync.sh -s SOURCE_SITENAME -d DEST_SITENAME [-p]"
+usage: d7-sync-site.sh -s SOURCE_SITENAME -d DEST_SITENAME [-p]
+example: d7-sync-site.sh -s default -d clubdrupal [-p]"
     echo -e "${help}"
 }
 
