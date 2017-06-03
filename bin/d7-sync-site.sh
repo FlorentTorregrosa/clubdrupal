@@ -73,11 +73,9 @@ drush -y rsync --delete --exclude="*.php" "@${source_site_name}:%site" "@${dest_
 
 # Sync databases
 ## Save file system
-if [ -z "${new_site}" ] ; then
-    private_path=$(drush "@${dest_site_name}" vget --format=string file_private_path 2> /dev/null)
-    public_path=$(drush "@${dest_site_name}" vget --format=string file_public_path 2> /dev/null)
-    temp_path=$(drush "@${dest_site_name}" vget --format=string file_temporary_path 2> /dev/null)
-fi
+private_path=$(drush "@${source_site_name}" vget --format=string file_private_path 2> /dev/null)
+public_path=$(drush "@${source_site_name}" vget --format=string file_public_path 2> /dev/null)
+temp_path=$(drush "@${source_site_name}" vget --format=string file_temporary_path 2> /dev/null)
 
 ## Sync
 current_date=$(date "+%Y-%m-%d-%Hh%Mm%Ss")
@@ -90,13 +88,30 @@ drush -y "@${dest_site_name}" sql-cli < "${sql_file}"
 rm "${sql_file}"
 
 ## Restore file system
+### Fix values for default sites/default/files must become sites/assos.centrale-marseille.fr.SITE/files
+### For the others sites/assos.centrale-marseille.fr.SITE/files must become assos.centrale-marseille.fr.OTHER_SITE/files
+if [ "${source_site_name}" = "default" ]; then
+    dest_path_name="assos.centrale-marseille.fr.${dest_site_name}"
+else
+    dest_path_name="${dest_site_name}"
+fi
+
+if [ "${dest_site_name}" = "default" ]; then
+   souce_path_name="assos.centrale-marseille.fr.${source_site_name}"
+else
+   source_path_name="${source_site_name}"
+fi
+
 if [ -n "${private_path}" ] ; then
+    private_path="${private_path/${source_path_name}/${dest_path_name}}"
     drush -y "@${dest_site_name}" vset file_private_path "${private_path}"
 fi
 if [ -n "${public_path}" ] ; then
+    public_path="${public_path/${source_path_name}/${dest_path_name}}"
     drush -y "@${dest_site_name}" vset file_public_path "${public_path}"
 fi
 if [ -n "${temp_path}" ] ; then
+    temp_path="${temp_path/${source_path_name}/${dest_path_name}}"
     drush -y "@${dest_site_name}" vset file_temporary_path "${temp_path}"
 fi
 
