@@ -34,8 +34,8 @@ for site in $(sites_list); do
     dir=$(get_site_dir_from_name "${site}")
 
     if [ "${mode}" = 'auto' ] ; then
-        drush @"${site}" sql-dump --result-file="${d7_dir_individual_auto_backup}/${dir}/${current_date}.${dir}.sql" --gzip
+        drush @"${site}" sql-dump --result-file="${d7_dir_individual_auto_backup}/${dir}/${current_date}.${dir}.sql" --gzip --structure-tables-key=common-d7
     else
-        drush @"${site}" sql-dump --result-file="${d7_dir_individual_manual_backup}/${dir}/${current_date}.${dir}.sql" --gzip
+        drush @"${site}" sql-dump --result-file="${d7_dir_individual_manual_backup}/${dir}/${current_date}.${dir}.sql" --gzip --structure-tables-key=common-d7
     fi
 done

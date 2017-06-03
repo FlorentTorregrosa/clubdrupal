@@ -63,7 +63,7 @@ else
     dir="assos.centrale-marseille.fr.${dest_site_name}"
 fi
 if [ -z "${new_site}" ] ; then
-    drush -y "@${source_site_name}" sql-dump --result-file="${d7_dir_individual_manual_backup}/${dir}/${current_date}.${dir}.sql" --gzip
+    drush -y "@${source_site_name}" sql-dump --result-file="${d7_dir_individual_manual_backup}/${dir}/${current_date}.${dir}.sql" --gzip --structure-tables-key=common-d7
 fi
 
 
@@ -80,7 +80,7 @@ temp_path=$(drush "@${source_site_name}" vget --format=string file_temporary_pat
 ## Sync
 current_date=$(date "+%Y-%m-%d-%Hh%Mm%Ss")
 sql_file="${dir_tmp}/${current_date}.${source_site_name}.sql"
-drush -y "@${source_site_name}" sql-dump --result-file="${sql_file}"
+drush -y "@${source_site_name}" sql-dump --result-file="${sql_file}" --structure-tables-key=common-d7
 sed -i -e "s#https?://assos.centrale-marseille.fr/${source_site_name}#https://assos.centrale-marseille.fr/${dest_site_name}#g" "${sql_file}"
 sed -i -e "s#/${source_site_name}/sites/assos.centrale-marseille.fr.${source_site_name}#/${dest_site_name}/sites/assos.centrale-marseille.fr.${dest_site_name}#g" "${sql_file}"
 drush -y "@${dest_site_name}" sql-drop

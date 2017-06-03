@@ -270,6 +270,26 @@
  */
 # $options['structure-tables']['common'] = array('cache', 'cache_filter', 'cache_menu', 'cache_page', 'history', 'sessions', 'watchdog');
 
+$options['structure-tables']['common-d7'] = [
+  'cache',
+  'cache_*',
+  'flood',
+  'history',
+  'search_*',
+  'sessions',
+  'watchdog',
+];
+
+$options['structure-tables']['common-d8'] = [
+  'cache',
+  'cache_*',
+  'flood',
+  'history',
+  'search_*',
+  'sessions',
+  'watchdog',
+];
+
 /**
  * List of tables to be omitted entirely from SQL dumps made by the 'sql-dump'
  * and 'sql-sync' commands when the "--skip-tables-key=common" option is
