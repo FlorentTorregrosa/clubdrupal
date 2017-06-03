@@ -37,4 +37,5 @@
 ~*^assos.centrale-marseille.fr/annales/.*$	/annales;
 ~*^assos.centrale-marseille.fr/aeecm/.*$	/aeecm;
 ~*^assos.centrale-marseille.fr/accueiltest/.*$	/accueiltest;
+~*^assos.centrale-marseille.fr/accueilold/.*$	/accueilold;
 ~*^assos.centrale-marseille.fr/accueil/.*$	/accueil;
