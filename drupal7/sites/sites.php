@@ -71,7 +71,6 @@ $sites['forum-foceen.centrale-marseille.fr'] = 'assos.centrale-marseille.fr.foru
 $sites['assos.centrale-marseille.fr.ftorregrosa'] = 'assos.centrale-marseille.fr.ftorregrosa';
 $sites['assos.centrale-marseille.fr.icm'] = 'assos.centrale-marseille.fr.icm';
 $sites['assos.centrale-marseille.fr.isf'] = 'assos.centrale-marseille.fr.isf';
-$sites['assos.centrale-marseille.fr.jenselme'] = 'assos.centrale-marseille.fr.jenselme';
 $sites['assos.centrale-marseille.fr.jenselmetest'] = 'assos.centrale-marseille.fr.jenselmetest';
 $sites['assos.centrale-marseille.fr.jpennec'] = 'assos.centrale-marseille.fr.jpennec';
 $sites['assos.centrale-marseille.fr.lessive'] = 'assos.centrale-marseille.fr.lessive';
