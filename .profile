@@ -8,3 +8,8 @@ export PATH="$HOME/.composer/vendor/bin:$PATH"
 
 ###### FUNCTIONS
 . ~/.functions
+
+###### DRUSH AUTOCOMPLETION
+if [ -f "~/.bashrc" ] ; then
+    . ~/.bashrc
+fi
