@@ -12,6 +12,7 @@
 ~*^assos.centrale-marseille.fr/forumfoceentest/.*$	/forumfoceentest;
 ~*^assos.centrale-marseille.fr/expat/.*$	/expat;
 ~*^assos.centrale-marseille.fr/ercm/.*$	/ercm;
+~*^assos.centrale-marseille.fr/epold/.*$	/epold;
 ~*^assos.centrale-marseille.fr/eluseleves/.*$	/eluseleves;
 ~*^assos.centrale-marseille.fr/election/.*$	/election;
 ~*^assos.centrale-marseille.fr/echangesphotest/.*$	/echangesphotest;
