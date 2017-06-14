@@ -92,3 +92,4 @@ $sites['assos.centrale-marseille.fr.rgrondin'] = 'assos.centrale-marseille.fr.rg
 $sites['assos.centrale-marseille.fr.clubdrupal'] = 'assos.centrale-marseille.fr.clubdrupal';
 $sites['assos.centrale-marseille.fr.accueilold'] = 'assos.centrale-marseille.fr.accueilold';
 $sites['assos.centrale-marseille.fr.forumtest'] = 'assos.centrale-marseille.fr.forumtest';
+$sites['assos.centrale-marseille.fr.echangespho'] = 'assos.centrale-marseille.fr.echangespho';

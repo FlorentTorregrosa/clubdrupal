@@ -16,6 +16,7 @@
 ~*^assos.centrale-marseille.fr/election/.*$	/election;
 ~*^assos.centrale-marseille.fr/echangesphotest/.*$	/echangesphotest;
 ~*^assos.centrale-marseille.fr/echangesphoceens/.*$	/echangesphoceens;
+~*^assos.centrale-marseille.fr/echangespho/.*$	/echangespho;
 ~*^assos.centrale-marseille.fr/djulientest/.*$	/djulientest;
 ~*^assos.centrale-marseille.fr/cneuvilletest/.*$	/cneuvilletest;
 ~*^assos.centrale-marseille.fr/clubrobot/.*$	/clubrobot;
