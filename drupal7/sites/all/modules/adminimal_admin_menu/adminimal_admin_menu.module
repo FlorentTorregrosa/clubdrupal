@@ -20,7 +20,6 @@ function adminimal_admin_menu_menu() {
   );
 
   return $items;
-
 }
 
 /**
@@ -31,46 +30,42 @@ function adminimal_admin_menu_page_build(&$page) {
     return;
   }
   $path = drupal_get_path('module', 'adminimal_admin_menu');
-	$load_slicknav = variable_get('adminimal_admin_menu_slicknav', TRUE );
-	$load_jQuery = variable_get('adminimal_admin_menu_jquery', TRUE );
+  $load_slicknav = variable_get('adminimal_admin_menu_slicknav', TRUE);
+  $load_jquery = variable_get('adminimal_admin_menu_jquery', TRUE);
 
   // Attach the CSS and JavaScript assets.
   drupal_add_css($path . '/adminimal_admin_menu.css');
 
-	// Support for the Environment Indicator module.
-  if (module_exists('environment_indicator')) {
-  $environment_info = environment_indicator_get_active();
-	  drupal_add_css('
-      div.slicknav_menu a.slicknav_btn:after {
-      	content: "' . $environment_info['name']. '";
-      	margin-left: 1em;
-      	color: ' . $environment_info['text_color'] . ';
-      	font-size: 12px;
-      	background-color: ' . $environment_info['color'] . ';
-				padding: 2px 5px;
-			}
-			#admin-menu-wrapper {background: #222 !important;}
-			',
-      array(
-        'group' => CSS_DEFAULT,
-        'type' => 'inline',
-        'preprocess' => FALSE,
-        'weight' => '100',
-      ));
-	}
+  _adminimal_admin_menu_support_environment_indicator();
 
-	// Check if both slicknav and custom jQuery must be loaded.
-	if ($load_slicknav and $load_jQuery) {
-	  drupal_add_js($path . '/js/jquery.min.js', array( 'type' => 'file', 'scope' => 'header', 'weight' => 888 ));
-		drupal_add_js($path . '/js/slicknav/jquery-no-conflict.slicknav.js', array( 'type' => 'file', 'scope' => 'header', 'weight' => 888 ));
-		drupal_add_css($path . '/js/slicknav/slicknav.css');
-	}
-	elseif ($load_slicknav and !$load_jQuery) {
-		drupal_add_js($path . '/js/slicknav/jquery.slicknav.js', array( 'type' => 'file', 'scope' => 'header', 'weight' => 888 ));
-		drupal_add_css($path . '/js/slicknav/slicknav.css');
-	}
+  // Check if both slicknav and custom jQuery must be loaded.
+  if ($load_slicknav and $load_jquery) {
+    drupal_add_js($path . '/js/jquery.min.js', array(
+      'type' => 'file',
+      'scope' => 'header',
+      'weight' => 888,
+    ));
+    drupal_add_js($path . '/js/slicknav/jquery-no-conflict.slicknav.js', array(
+      'type' => 'file',
+      'scope' => 'header',
+      'weight' => 888,
+    ));
+    drupal_add_css($path . '/js/slicknav/slicknav.css');
+  }
+  elseif ($load_slicknav and !$load_jquery) {
+    drupal_add_js($path . '/js/slicknav/jquery.slicknav.js', array(
+      'type' => 'file',
+      'scope' => 'header',
+      'weight' => 888,
+    ));
+    drupal_add_css($path . '/js/slicknav/slicknav.css');
+  }
 
-	drupal_add_js($path . '/js/adminimal_admin_menu.js', array( 'type' => 'file', 'scope' => 'header', 'weight' => 888 ));
+  drupal_add_js($path . '/js/adminimal_admin_menu.js', array(
+    'type' => 'file',
+    'scope' => 'header',
+    'weight' => 888,
+  ));
 
   if (!isset($page['page_bottom']['admin_menu'])) {
     return;
@@ -99,7 +94,39 @@ function adminimal_admin_menu_page_build(&$page) {
     'data' => array('admin_menu' => array('toolbar' => $settings)),
     'type' => 'setting',
   );
+}
 
+/**
+ * Add CSS for module environment_indicator.
+ */
+function _adminimal_admin_menu_support_environment_indicator() {
+  if (!module_exists('environment_indicator')) {
+    return;
+  }
+
+  $environment_info = environment_indicator_get_active();
+
+  if (!environment_indicator_check_access($environment_info)) {
+    return;
+  }
+
+  drupal_add_css('
+      div.slicknav_menu a.slicknav_btn:after {
+        content: "' . $environment_info['name'] . '";
+        margin-left: 1em;
+        color: ' . $environment_info['text_color'] . ';
+        font-size: 12px;
+        background-color: ' . $environment_info['color'] . ';
+        padding: 2px 5px;
+      }
+      #admin-menu-wrapper {background: #222 !important;}
+      ',
+    array(
+      'group' => CSS_DEFAULT,
+      'type' => 'inline',
+      'preprocess' => FALSE,
+      'weight' => '100',
+    ));
 }
 
 /**
@@ -140,6 +167,7 @@ function adminimal_admin_menu_admin_menu_output_alter(&$content) {
   unset($content['icon']['icon']['#theme']);
   $content['icon']['icon']['#title'] = '<span class="admin-menu-home-icon">&nbsp;</span>';
   $content['icon']['icon']['#attributes']['class'][] = 'admin-menu-toolbar-home-menu';
+  // @todo Fix this CS-issue.
   $page['#attributes']['class'][] = 'adminimal-menu';
 
   // Hide the menu.
@@ -152,30 +180,37 @@ function adminimal_admin_menu_admin_menu_output_alter(&$content) {
     }
   }
 
-	// Create the responsive menu.
-	if (variable_get('adminimal_admin_menu_slicknav', 'TRUE')) {
-	  // Prepare the responsive menu and Join the Icon menu with the administration menu.
-	  $responsivemenu = array_merge($content['icon'], $content['menu']);
-	
-	  // Give it ID to target it later with js and css.
-	  $responsivemenu['#wrapper_attributes']['id'] = 'admin-menu-menu-responsive';
-	
-	  // Move the icon menu to the top.
-	  $responsivemenu['icon']['#weight'] = '-100';
-	
-	  // Change the link title to Administration.
-	  $responsivemenu['admin/index']['#title'] = t('Administration');
-	
-	  // Bind the responsive menu the the content varable so it can be rendered.
-	  $content['responsive-menu'] = $responsivemenu;
-	
-	  // Create the responsive shortucts.
-	  $content['responsive']['shortcuts'] = array(
-	    '#prefix' => '<div id="admin-menu-shortcuts-responsive">',
-	    '#suffix' => '</div>',
-	    '#pre_render' => array('shortcut_toolbar_pre_render'),
-	  );
-	}
+  // Create the responsive menu.
+  if (variable_get('adminimal_admin_menu_slicknav', TRUE)) {
+    // Join the Icon menu with the administration menu.
+    $responsivemenu = array_merge($content['icon'], $content['menu']);
+
+    // Give it ID to target it later with js and css.
+    $responsivemenu['#wrapper_attributes']['id'] = 'admin-menu-menu-responsive';
+
+    // Move the icon menu to the top.
+    $responsivemenu['icon']['#weight'] = '-100';
+
+    // Change the link title for 'admin/index' to Administration if it exists.
+    if (!empty($responsivemenu['admin/index'])) {
+      $responsivemenu['admin/index']['#title'] = t('Administration');
+    }
+
+    // Add the account menu, and push account and logout links toward bottom.
+    $responsivemenu = array_merge($content['account'], $responsivemenu);
+    $responsivemenu['account']['#weight'] = 99;
+    $responsivemenu['logout']['#weight'] = 100;
+
+    // Bind the responsive menu the the content varable so it can be rendered.
+    $content['responsive-menu'] = $responsivemenu;
+
+    // Create the responsive shortucts.
+    $content['responsive']['shortcuts'] = array(
+      '#prefix' => '<div id="admin-menu-shortcuts-responsive">',
+      '#suffix' => '</div>',
+      '#pre_render' => array('shortcut_toolbar_pre_render'),
+    );
+  }
 }
 
 /**
@@ -199,17 +234,19 @@ function adminimal_admin_menu_preprocess_html(&$vars) {
   // Add the shortcut render mode class.
   $vars['classes_array'][] = 'menu-render-' . variable_get('adminimal_admin_menu_render', 'collapsed');
 
-  // Fix the viewport, correcting the mobile device zoom.
-  /** @todo - Mybre remove this and let the theme manage the view pont.
-   *  But i was suprised that only few "responsive" drupal themes were fixing
-   *  the viewport.
+  /*
+   * Fix the viewport, correcting the mobile device zoom.
+   *
+   * @todo Maybe remove this and let the theme manage the view point.
+   *   But i was suprised that only few "responsive" drupal themes were fixing
+   *   the viewport.
    */
   $viewport = array(
-   '#tag' => 'meta',
-   '#attributes' => array(
-     'name' => 'viewport',
-     'content' => 'width=device-width, initial-scale=1, maximum-scale=1',
-   ),
+    '#tag' => 'meta',
+    '#attributes' => array(
+      'name' => 'viewport',
+      'content' => 'width=device-width, initial-scale=1, maximum-scale=1',
+    ),
   );
   drupal_add_html_head($viewport, 'viewport');
 
@@ -217,7 +254,9 @@ function adminimal_admin_menu_preprocess_html(&$vars) {
 
 /**
  * Check if the user has access to use the admin menu.
- * @return  boolean Result of access checks.
+ *
+ * @return bool
+ *   Result of access checks.
  */
 function _adminimal_admin_menu_access() {
   if (!user_access('access administration menu') || admin_menu_suppress(FALSE)) {
