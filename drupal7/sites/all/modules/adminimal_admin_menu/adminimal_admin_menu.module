@@ -10,16 +10,34 @@
  */
 function adminimal_admin_menu_menu() {
   $items = array();
+
   $items['admin/config/administration/adminimal_menu'] = array(
     'title' => 'Adminimal menu',
     'description' => 'Adjust adminimal menu settings.',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('adminimal_admin_menu_settings'),
     'access arguments' => array('administer site configuration'),
-    'file' => 'adminimal_menu_settings.inc',
+    'file' => 'adminimal_admin_menu.admin.inc',
   );
 
   return $items;
+}
+
+/**
+ * Implements hook_module_implements_alter().
+ */
+function adminimal_admin_menu_module_implements_alter(&$implementations, $hook) {
+  // Put Adminimal Admin Menu's implementation of hook_admin_menu_output_alter()
+  // to the end of the list of implementors, assuring that it will be executed
+  // at the very end. Other modules may manipulate the menu items in the
+  // administration menu (i.e. the excellent Administration Menu Source) and we
+  // need to make sure those changes are preserved and respected by the output
+  // of Adminimal Admin Menu.
+  if ($hook == 'admin_menu_output_alter') {
+    $group = $implementations['adminimal_admin_menu'];
+    unset($implementations['adminimal_admin_menu']);
+    $implementations['adminimal_admin_menu'] = $group;
+  }
 }
 
 /**
@@ -73,8 +91,7 @@ function adminimal_admin_menu_page_build(&$page) {
   $attached = &$page['page_bottom']['admin_menu']['#attached'];
   $options = array('every_page' => TRUE);
 
-  // @todo Stop-gap fix until cached rendering is resolved.
-  // @see http://drupal.org/node/1567622
+  // @todo Stop-gap fix until cached rendering is resolved (http://drupal.org/node/1567622).
   if (module_exists('shortcut')) {
     $attached['css'][drupal_get_path('module', 'shortcut') . '/shortcut.css'] = $options;
   }
@@ -134,7 +151,8 @@ function _adminimal_admin_menu_support_environment_indicator() {
  */
 function adminimal_admin_menu_admin_menu_output_build(&$content) {
 
-  if (variable_get('adminimal_admin_menu_render', 'collapsed') != 'hidden') {
+  // Shortcut menu.
+  if (module_exists('shortcut') && variable_get('adminimal_admin_menu_render', 'collapsed') != 'hidden') {
     // Add shortcuts bar.
     $content['shortcut'] = array(
       '#access' => module_exists('shortcut'),
@@ -151,7 +169,6 @@ function adminimal_admin_menu_admin_menu_output_build(&$content) {
       '#pre_render' => array('shortcut_toolbar_pre_render'),
     );
   }
-
 }
 
 /**
@@ -171,7 +188,7 @@ function adminimal_admin_menu_admin_menu_output_alter(&$content) {
   $page['#attributes']['class'][] = 'adminimal-menu';
 
   // Hide the menu.
-  if (variable_get('adminimal_admin_menu_render', 'collapsed') == 'exclusive') {
+  if (module_exists('shortcut') && variable_get('adminimal_admin_menu_render', 'collapsed') == 'exclusive') {
     unset($content['icon']['icon']);
     unset($content['search']);
     foreach ($content['menu'] as $key => $link) {
@@ -205,11 +222,13 @@ function adminimal_admin_menu_admin_menu_output_alter(&$content) {
     $content['responsive-menu'] = $responsivemenu;
 
     // Create the responsive shortucts.
-    $content['responsive']['shortcuts'] = array(
-      '#prefix' => '<div id="admin-menu-shortcuts-responsive">',
-      '#suffix' => '</div>',
-      '#pre_render' => array('shortcut_toolbar_pre_render'),
-    );
+    if (module_exists('shortcut')) {
+      $content['responsive']['shortcuts'] = array(
+        '#prefix' => '<div id="admin-menu-shortcuts-responsive">',
+        '#suffix' => '</div>',
+        '#pre_render' => array('shortcut_toolbar_pre_render'),
+      );
+    }
   }
 }
 
@@ -220,6 +239,7 @@ function adminimal_admin_menu_preprocess_html(&$vars) {
   if (!_adminimal_admin_menu_access()) {
     return;
   }
+
   // Add the "adminimal" class to the body for better css selection.
   $vars['classes_array'][] = 'adminimal-menu';
 
@@ -232,24 +252,31 @@ function adminimal_admin_menu_preprocess_html(&$vars) {
   }
 
   // Add the shortcut render mode class.
-  $vars['classes_array'][] = 'menu-render-' . variable_get('adminimal_admin_menu_render', 'collapsed');
+  if (module_exists('shortcut')) {
+    $vars['classes_array'][] = 'menu-render-' . variable_get('adminimal_admin_menu_render', 'collapsed');
+  }
 
-  /*
-   * Fix the viewport, correcting the mobile device zoom.
-   *
-   * @todo Maybe remove this and let the theme manage the view point.
-   *   But i was suprised that only few "responsive" drupal themes were fixing
-   *   the viewport.
-   */
-  $viewport = array(
-    '#tag' => 'meta',
-    '#attributes' => array(
-      'name' => 'viewport',
-      'content' => 'width=device-width, initial-scale=1, maximum-scale=1',
-    ),
-  );
-  drupal_add_html_head($viewport, 'viewport');
+  _adminimal_admin_menu_viewport();
+}
 
+/**
+ * Add viewport for scaling on devices.
+ */
+function _adminimal_admin_menu_viewport() {
+  $use_slicknav = variable_get('adminimal_admin_menu_slicknav', TRUE);
+  $use_viewport = variable_get('adminimal_admin_menu_viewport', TRUE);
+
+  // Only needed for slicknav.
+  if ($use_slicknav && $use_viewport) {
+    $viewport = array(
+      '#tag' => 'meta',
+      '#attributes' => array(
+        'name' => 'viewport',
+        'content' => 'width=device-width, initial-scale=1',
+      ),
+    );
+    drupal_add_html_head($viewport, 'viewport');
+  }
 }
 
 /**
