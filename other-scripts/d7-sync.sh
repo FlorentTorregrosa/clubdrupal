@@ -93,7 +93,7 @@ if [ "$ret" -ne 0 ] ; then
     echo "drush or site has a problem. Exiting."
     exit 1
 fi
-drush -y dis piwik
+drush -y dis matomo
 drush -y vset maintenace_mode 0
 drush -y vset error_level 2
 drush -y dis cas
