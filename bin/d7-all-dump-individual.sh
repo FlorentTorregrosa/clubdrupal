@@ -1,7 +1,7 @@
 #!/bin/sh
 
 usage() {
-    printf "d7-all-dump-individual.sh -m MODE\nRecognized mode are:\n\t%s\n\t%s\n" 'manunal' 'auto'
+    printf "d7-all-dump-individual.sh -m MODE\nRecognized mode are:\n\t%s\n\t%s\n" 'manual' 'auto'
     printf "d7-all-dump-individual.sh -h prints this help message.\n"
 }
 
