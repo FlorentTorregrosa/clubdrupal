@@ -36,8 +36,8 @@ drush @"${site}" -yq vdel captcha_placement_map_cache
 drush @"${site}" -yq vset hidden_captcha_label "$random_1 + $random_2"
 
 
-####### Piwik
-d7-reset-piwik-variables.sh "${site}"
+####### Matomo
+d7-reset-matomo-variables.sh "${site}"
 
 ###### Security review
 # For untrusted roles:
