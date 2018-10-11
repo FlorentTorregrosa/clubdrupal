@@ -41,7 +41,7 @@ function print_controller_html() {
 
     $nodepath = (isset($node->nid)) ? 'node/' . $node->nid : drupal_get_normal_path($path);
     db_merge('print_page_counter')
-      ->key(array('path' => $nodepath))
+      ->key(array('path' => substr($nodepath, 0, 255)))
       ->fields(array(
         'totalcount' => 1,
         'timestamp' => REQUEST_TIME,
@@ -193,7 +193,7 @@ function print_preprocess_print(&$variables) {
   $variables['css'] = _print_css_generator($variables['expand_css']);
 
   if (variable_get('print_html_sendtoprinter', PRINT_HTML_SENDTOPRINTER_DEFAULT) && ($format == 'html')) {
-    drupal_add_js('misc/drupal.js', array('weight' => JS_LIBRARY));
+    drupal_add_js('misc/drupal.js', array('group' => JS_LIBRARY));
 
     $window_close = (variable_get('print_html_new_window', PRINT_HTML_NEW_WINDOW_DEFAULT) && variable_get('print_html_windowclose', PRINT_HTML_WINDOWCLOSE_DEFAULT)) ? 'setTimeout(function(){window.close();}, 1);' : '';
     $variables['sendtoprinter'] = '<script type="text/javascript">(function ($) { Drupal.behaviors.print = {attach: function() {$(window).load(function() {window.print();' . $window_close . '})}}})(jQuery);</script>';
@@ -376,7 +376,7 @@ function _print_robots_meta_generator() {
   }
 
   if (count($robots_meta) > 0) {
-    return '<meta name="robots" content=' . implode(', ', $robots_meta) . ' />';
+    return '<meta name="robots" content="' . implode(', ', $robots_meta) . '" />';
   }
   else {
     return '';
