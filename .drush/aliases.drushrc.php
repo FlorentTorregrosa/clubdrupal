@@ -2,7 +2,6 @@
 $aliases['d7'] = array(
     'site-list' => array(
 'assos.centrale-marseille.fr/ancienbde',
-'assos.centrale-marseille.fr/mlannes',
 'assos.centrale-marseille.fr/uaecm',
 'assos.centrale-marseille.fr/epold',
 'assos.centrale-marseille.fr/forumtest',
@@ -84,5 +83,4 @@ $aliases['accueilold'] = array('uri' => 'assos.centrale-marseille.fr/accueilold'
 $aliases['forumtest'] = array('uri' => 'assos.centrale-marseille.fr/forumtest', 'root' => '/home/assos/drupal7/', );
 $aliases['epold'] = array('uri' => 'assos.centrale-marseille.fr/epold', 'root' => '/home/assos/drupal7/', );
 $aliases['uaecm'] = array('uri' => 'assos.centrale-marseille.fr/uaecm', 'root' => '/home/assos/drupal7/', );
-$aliases['mlannes'] = array('uri' => 'assos.centrale-marseille.fr/mlannes', 'root' => '/home/assos/drupal7/', );
 $aliases['ancienbde'] = array('uri' => 'assos.centrale-marseille.fr/ancienbde', 'root' => '/home/assos/drupal7/', );
