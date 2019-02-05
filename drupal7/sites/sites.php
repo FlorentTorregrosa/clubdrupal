@@ -93,5 +93,4 @@ $sites['assos.centrale-marseille.fr.forumtest'] = 'assos.centrale-marseille.fr.f
 $sites['assos.centrale-marseille.fr.epold'] = 'assos.centrale-marseille.fr.epold';
 $sites['assos.centrale-marseille.fr.uaecm'] = 'assos.centrale-marseille.fr.uaecm';
 $sites['assos.centrale-marseille.fr.mlannes'] = 'assos.centrale-marseille.fr.mlannes';
-$sites['assos.centrale-marseille.fr.acohen'] = 'assos.centrale-marseille.fr.acohen';
 $sites['assos.centrale-marseille.fr.ancienbde'] = 'assos.centrale-marseille.fr.ancienbde';
